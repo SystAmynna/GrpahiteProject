@@ -4,10 +4,10 @@
 
 #include <GameInstance.h>
 
-#include <GameRunner.h>
-
 /** Utilisation du Namespace Engine */
 using namespace Engine;
+
+GameInstance* GameInstance::instance = nullptr;
 
 /** Constructeur privé */
 GameInstance::GameInstance() {
@@ -18,27 +18,15 @@ GameInstance::GameInstance() {
 /** Destructeur */
 GameInstance::~GameInstance() = default;
 
-/** Getteur du Singleton GameInstance */
-GameInstance* GameInstance::get() {
-    if (instance == nullptr) {
-        instance = new GameInstance();
-    }
-    return instance;
+bool GameInstance::initializeEngine() {
+    // Initialisation des composants du moteur
+    return true;
 }
-
-/** Getteur pour savoir si l'application tourne */
-bool GameInstance::isRunning() {
-    return running;
-}
-
-void GameInstance::addGameRunner(const World *world) {
-
-    // Crée un GameRunner pour le monde donné
-    auto runnerPtr = std::make_unique<GameRunner>(world);
-    GameRunner* raw = runnerPtr.get();
-    // Ajoute le GameRunner à la liste des runners
-    GameRunner::addRunner(std::move(runnerPtr));
-    // Démarre le GameRunner
-    raw->start();
+void GameInstance::runEngine() {
 
 }
+void GameInstance::destroyEngine() {
+    // Nettoyage des ressources du moteur
+}
+
+void GameInstance::closeEngine() {}

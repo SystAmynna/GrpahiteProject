@@ -19,22 +19,44 @@ class Engine::GameInstance {
     /** Indique si l'application tourne */
     bool running;
 
-    /** Constructeur privé pour empêcher l'instanciation externe */
-    GameInstance();
-    /** Destructeur */
-    ~GameInstance();
+
 
 
 public:
 
+    /** Constructeur privé pour empêcher l'instanciation externe */
+    GameInstance();
+    /** Destructeur */
+    virtual ~GameInstance();
+
+    static void setInstance(GameInstance* inst) {
+        // Empêche de réassigner l'instance si elle est déjà définie
+        if (instance != nullptr) return;
+        instance = inst;
+    }
+
     /** Getteur du Singleton GameInstance */
-    static GameInstance* get();
+    static GameInstance* get() {
+        return instance;
+    }
 
     /** Retourne si l'application est en train de tourner */
-    bool isRunning();
+    bool isRunning() {
+        return running;
+    }
 
-    void addGameRunner(const World* world);
+    void stopRunning() {
+        running = false;
+    }
 
+
+    virtual bool initializeEngine();
+
+    virtual void runEngine();
+
+    virtual void destroyEngine();
+
+    virtual void closeEngine();
 
 
 };
