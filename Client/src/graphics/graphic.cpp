@@ -29,13 +29,11 @@ bool graphics::init() {
 
     // Création de la fenêtre
     window = glfwCreateWindow(SRC_WIDTH, SRC_HEIGHT, SRC_TITLE.c_str(), nullptr, nullptr);
-    if (!window) {
+    if (window == nullptr) {
         logger::log(logger::ERROR, "Echec de la création de la fenêtre GLFW");
         glfwTerminate();
         return false;
     }
-
-    // Contexte de la fenêtre
     glfwMakeContextCurrent(window);
 
     // Callback du rescale de la fenêtre
@@ -50,8 +48,15 @@ bool graphics::init() {
         return false;
     }
 
+    // Viewport
+    glViewport(0, 0, SRC_WIDTH, SRC_HEIGHT);
+
+
     // V-Sync
     if (!vsync_enabled) glfwSwapInterval(0);
+
+    // Paramètres OpenGL
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 
     // Initialisation réussie

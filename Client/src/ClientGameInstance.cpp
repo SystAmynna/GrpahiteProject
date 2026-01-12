@@ -35,12 +35,13 @@ void ClientGameInstance::runEngine() {
 
     while (isRunning()) {
 
-        logger::log(logger::DEBUG, "Itération de la boucle principale du moteur de jeu client.");
+        glfwPollEvents();
+
+
         graphics::render();
 
-        if (glfwWindowShouldClose(graphics::window)) {
-            closeEngine();
-        }
+        if (glfwWindowShouldClose(graphics::window)) closeEngine();
+
     }
 
 }
